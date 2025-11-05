@@ -11,7 +11,7 @@ const Orders = () => {
 
       {/* Example structure for one order — map your real data here */}
       <section className="mt-6 flex flex-col gap-6">
-        {products.slice(0, 5).map((item, index) => (
+        {products.slice(0, 3).map((item, index) => (
           <div
             key={index}
             className="flex flex-wrap items-center justify-between border-b border-gray-200 pb-5 gap-4"
@@ -19,7 +19,7 @@ const Orders = () => {
             {/* Product Info */}
             <div className="flex items-center flex-wrap gap-5 w-full sm:w-auto">
               <img
-                src={item.img[0]}
+                src={item.image[0]}
                 alt="Product"
                 className="w-20 h-20 object-cover rounded-md"
               />

@@ -22,6 +22,7 @@ app.use(cors())
 app.use('/api/user' , userRoute)
 app.use('/api/product' , productRouter)
 
+
 app.get('/',(req,res)=>{
     res.send("Backend is start sucessfully")
 })

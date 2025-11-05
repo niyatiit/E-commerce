@@ -9,7 +9,7 @@ export { ShopContext }; // separately exported below — cleaner for HMR
 const ShopContextProvider = ({ children }) => {
   const currency = "$";
   const delivaryFess = 10;
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = "http://localhost:3000";
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
@@ -17,26 +17,29 @@ const ShopContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
   const addToCart = async (itemId, size) => {
-    let cartData = structuredClone(cartItems);
+    let cartData = structuredClone(cartItems || {});
 
     if (!size) {
       toast.error("Please Select Product Size");
       return;
     }
-    if (cartData[itemId]) {
-      if (cartData[itemId][size]) {
-        cartData[itemId][size] += 1;
-      } else {
-        cartData[itemId][size] = 1;
-      }
-    } else {
+
+    if (!cartData[itemId]) {
       cartData[itemId] = {};
+    }
+
+    if (cartData[itemId][size]) {
+      cartData[itemId][size] += 1;
+    } else {
       cartData[itemId][size] = 1;
     }
+
     setCartItems(cartData);
   };
 
-  useEffect(() => {}, [cartItems]);
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems]);
 
   const getCartCount = () => {
     let totalCount = 0;
@@ -58,12 +61,14 @@ const ShopContextProvider = ({ children }) => {
     let cartData = structuredClone(cartItems);
     cartData[itemId][size] = quantity;
     setCartItems(cartData);
+    console.log(quantity);
+    
   };
 
   const getCartAmount = () => {
     let totalAmount = 0;
     for (let items in cartItems) {
-      let itemInfo = products.find((product) => product.id === items);
+      let itemInfo = products.find((product) => product._id === items);
       for (let item in cartItems[items]) {
         try {
           if (cartItems[items][item] > 0) {
@@ -79,20 +84,17 @@ const ShopContextProvider = ({ children }) => {
 
   const getProductsData = async () => {
     try {
-      const response = await axios.get(backendUrl+'/api/product/list');
-      console.log("Products API Response:", response.data);
+      const response = await axios.get(backendUrl + "/api/product/list");
+      // console.log("Products API Response:", response.data);
 
-      if(response.data.success)
-      {
-        setProducts(response.data.products)
-      }
-      else
-      {
-        toast.error(response.data.message)
+      if (response.data.success) {
+        setProducts(response.data.products);
+      } else {
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
@@ -117,9 +119,7 @@ const ShopContextProvider = ({ children }) => {
     backendUrl,
   };
 
-  return (
-    <ShopContext.Provider value={value}>{children}</ShopContext.Provider>
-  );
+  return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
 };
 
 export default ShopContextProvider;

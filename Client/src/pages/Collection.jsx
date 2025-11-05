@@ -14,7 +14,7 @@ const Collection = () => {
   const [category, setCategory] = useState([]);
 
   // show all subcategory section :- checkbox for TYPES
-  const [subCategory, setSubCategory] = useState([]);
+  const [subcategory, setSubcategory] = useState([]);
 
   // Show Sorted Products here
   const [sortType, setSortType] = useState("relevance");
@@ -33,23 +33,23 @@ const Collection = () => {
   };
 
   // check that only console in all categorys
-  // useEffect(()=>{
-  //   console.log(category)
-  // },[category])
+  // useEffect(() => {
+  //   console.log(category);
+  // }, [category]);
 
   // only for type
   const toggleSubCategory = (e) => {
-    if (subCategory.includes(e.target.value)) {
-      setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
+    if (subcategory.includes(e.target.value)) {
+      setSubcategory((prev) => prev.filter((item) => item !== e.target.value));
     } else {
-      setSubCategory((prev) => [...prev, e.target.value]);
+      setSubcategory((prev) => [...prev, e.target.value]);
     }
   };
 
   // Check that only console in all Types
-  // useEffect(()=>{
-  //   console.log(subcategory)
-  // },[subcategory])
+  useEffect(()=>{
+    console.log(subcategory)
+  },[subcategory])
 
   // When Checkbox Click then thi function run other wise show all the Products in the collection pages
   const applyFilter = () => {
@@ -61,9 +61,9 @@ const Collection = () => {
       );
     }
 
-    if (subCategory.length > 0) {
+    if (subcategory.length > 0) {
       productsCopy = productsCopy.filter((item) =>
-        subCategory.includes(item.subCategory)
+        subcategory.includes(item.subcategory)
       );
     }
 
@@ -80,7 +80,7 @@ const Collection = () => {
     applyFilter();
     // console.log("subcategory :- ", subCategory);
     // console.log("category :- ", category);
-  }, [category, subCategory , search , showSearch , products]);
+  }, [category, subcategory, search, showSearch, products]);
 
   // Sorted Product show Only
   const sortProducts = () => {
@@ -138,6 +138,7 @@ const Collection = () => {
                   type="checkbox"
                   value="Men"
                   className="accent-black w-4 h-4"
+                  checked={category.includes("Men")}
                   onChange={toggleCategory}
                 />
                 Men
@@ -147,8 +148,9 @@ const Collection = () => {
                   type="checkbox"
                   value="Women"
                   className="accent-black w-4 h-4"
+                  checked={category.includes("Women")}
                   onChange={toggleCategory}
-                />
+                  />
                 Women
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
@@ -156,6 +158,7 @@ const Collection = () => {
                   type="checkbox"
                   value="Kids"
                   className="accent-black w-4 h-4"
+                  checked={category.includes("Kids")}
                   onChange={toggleCategory}
                 />
                 Kids
@@ -172,6 +175,7 @@ const Collection = () => {
                   type="checkbox"
                   value="Topwear"
                   className="accent-black w-4 h-4"
+                   checked={subcategory.includes("Topwear")}
                   onChange={toggleSubCategory}
                 />
                 Topwear
@@ -181,6 +185,7 @@ const Collection = () => {
                   type="checkbox"
                   value="Bottomwear"
                   className="accent-black w-4 h-4"
+                  checked={subcategory.includes("Bottomwear")}
                   onChange={toggleSubCategory}
                 />
                 Bottomwear
@@ -190,6 +195,7 @@ const Collection = () => {
                   type="checkbox"
                   value="Winterwear"
                   className="accent-black w-4 h-4"
+                  checked={subcategory.includes("Winterwear")}
                   onChange={toggleSubCategory}
                 />
                 Winterwear
@@ -224,8 +230,8 @@ const Collection = () => {
         {filterProduct.map((item, index) => (
           <ProductItem
             key={index}
-            id={item.id}
-            img={item.img[0]}
+            id={item._id}
+            img={item.image[0]}
             name={item.name}
             price={item.price}
             description={item.description}

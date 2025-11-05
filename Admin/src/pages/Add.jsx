@@ -243,7 +243,7 @@ const Add = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Product category
               </label>
-              <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+              <select value={category} onChange={(e)=>setCategory(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                 <option value={"Women"}>Women</option>
                 <option value={"Men"}>Men</option>
                 <option value={"Kids"}>Kids</option>
@@ -254,7 +254,7 @@ const Add = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Sub category
               </label>
-              <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
+              <select value={subCategory}  onChange={(e)=>setsubCategory(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent">
                 <option value={"Topwear"}>Topwear</option>
                 <option value={"Bottomwear"}>Bottomwear</option>
                 <option value={"Sweater"}>Sweater</option>

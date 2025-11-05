@@ -4,22 +4,17 @@ import { ShopContext } from "../context/ShopContext";
 import RelatedProduct from "../components/RelatedProduct";
 
 const Product = () => {
-  // Fetch Id end show only this id Products
   const { productId } = useParams();
-  // console.log(productId);
-
   const { products, addToCart } = useContext(ShopContext);
-  const [productData, setProductData] = useState(false);
-
+  const [productData, setProductData] = useState({});
   const [img, setImg] = useState("");
-
   const [size, setSize] = useState(""); //Size
 
   const fetchProductData = async () => {
     products.map((item) => {
-      if (item.id === productId) {
+      if (item._id === productId) {
         setProductData(item);
-        console.log(item);
+        // console.log(item);
         return null;
       }
     });
@@ -31,7 +26,7 @@ const Product = () => {
 
   useEffect(() => {
     if (productData && productData.img && productData.img.length > 0) {
-      setImg(productData.img[0]);
+      setImg(productData.image[0]);
     }
   }, [productData]);
 
@@ -40,7 +35,7 @@ const Product = () => {
       <main className="mt-28 bg-white px-4 md:px-20 py-10 flex flex-col md:flex-row gap-10">
         {/* Left thumbnails */}
         <div className="flex md:flex-col gap-4 justify-center md:justify-start">
-          {productData.img.map((item, index) => (
+          {productData?.image?.map((item, index) => (
             <img
               key={index}
               src={item}
@@ -75,7 +70,7 @@ const Product = () => {
           <p className="text-gray-600 mb-6">{productData.description}</p>
           <p className="font-bold"> Select Size </p>
           <div className="felx">
-            {productData.size.map((item, index) => (
+            {productData?.size?.map((item, index) => (
               <button
                 className={`border-1 my-2 mx-2 p-2 w-10 rounded-lg hover:cursor-pointer ${
                   item === size ? "border-orange-700" : ""
@@ -102,7 +97,7 @@ const Product = () => {
             </ul>
           </div>
           <button
-            onClick={() => addToCart(productData.id, size)}
+            onClick={() => addToCart(productData._id, size)}
             className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 cursor-pointer transition-all"
           >
             Add to Cart

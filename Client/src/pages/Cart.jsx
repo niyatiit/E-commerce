@@ -32,7 +32,7 @@ const Cart = () => {
       
         {cartData.map((item, index) => {
           const productData = products.find(
-            (product) => product.id === item.id
+            (product) => product._id === item.id
           );
           if (!productData) return null;
 
@@ -44,7 +44,7 @@ const Cart = () => {
               {/* Left Section */}
               <div className="flex items-center gap-6 w-full md:w-auto">
                 <img
-                  src={productData.img[0]}
+                  src={productData.image[0]}
                   alt="Product"
                   className="w-28 h-32 object-cover rounded-lg border"
                 />
@@ -76,7 +76,7 @@ const Cart = () => {
                   }
                   type="number"
                   min="1"
-                  defaultValue={item.quantity}
+                  value={item.quantity}
                   className="border border-gray-300 px-3 mr-70 py-1.5 w-16 text-center rounded-md outline-none focus:ring-2 focus:ring-blue-400"
                 />
                 <button

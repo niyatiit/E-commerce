@@ -24,7 +24,7 @@ const LatestCollection = () => {
       <div className="flex flex-wrap gap-5 p-5 m-5 justify-center items-center">
         {
             latestProducts.map((item,index)=>(
-                <ProductsItem key={index} id={item.id} img={item.img[0]} name={item.name} description={item.description} price={item.price} />
+                <ProductsItem key={index} id={item._id} img={item.image[0]} name={item.name} description={item.description} price={item.price} />
             ))
         }
       </div>
