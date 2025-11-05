@@ -8,8 +8,8 @@ import OurPolicy from '../components/OurPolicy'
 import NewsLetterBox from '../components/NewsLetterBox'
 
 const Home = () => {
-  const {products} = useContext(ShopContext)
-  console.log("Products : " ,products)
+  // const {products} = useContext(ShopContext)
+  // console.log("Products : " ,products)
   
 
   return (

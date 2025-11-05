@@ -3,10 +3,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const ShopContext = createContext(); //global storage
+const ShopContext = createContext(); // changed from "export const" to "const"
+export { ShopContext }; // separately exported below — cleaner for HMR
 
-const ShopContextProvider = (props) => {
-  // store this values to use anywhere end any components
+const ShopContextProvider = ({ children }) => {
   const currency = "$";
   const delivaryFess = 10;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -17,7 +17,7 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
 
   const addToCart = async (itemId, size) => {
-    let cartData = structuredClone(cartItems); //Copy all the cartItems data in the cartData
+    let cartData = structuredClone(cartItems);
 
     if (!size) {
       toast.error("Please Select Product Size");
@@ -25,9 +25,9 @@ const ShopContextProvider = (props) => {
     }
     if (cartData[itemId]) {
       if (cartData[itemId][size]) {
-        cartData[itemId][size] += 1; // if any size is already 1 then increase that size
+        cartData[itemId][size] += 1;
       } else {
-        cartData[itemId][size] = 1; //if first time you add to cart any producct then size is first time 1
+        cartData[itemId][size] = 1;
       }
     } else {
       cartData[itemId] = {};
@@ -36,13 +36,10 @@ const ShopContextProvider = (props) => {
     setCartItems(cartData);
   };
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  useEffect(() => {}, [cartItems]);
 
   const getCartCount = () => {
     let totalCount = 0;
-
     for (let items in cartItems) {
       for (let item in cartItems[items]) {
         try {
@@ -59,9 +56,7 @@ const ShopContextProvider = (props) => {
 
   const updateQuantity = async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
-
     cartData[itemId][size] = quantity;
-
     setCartItems(cartData);
   };
 
@@ -69,7 +64,6 @@ const ShopContextProvider = (props) => {
     let totalAmount = 0;
     for (let items in cartItems) {
       let itemInfo = products.find((product) => product.id === items);
-
       for (let item in cartItems[items]) {
         try {
           if (cartItems[items][item] > 0) {
@@ -84,27 +78,28 @@ const ShopContextProvider = (props) => {
   };
 
   const getProductsData = async () => {
-  try {
-    const token = localStorage.getItem("token");
-    const response = await axios.get(backendUrl + "/api/product/list", {
-      headers: { token },
-    });
-    console.log(response.data);
+    try {
+      const response = await axios.get(backendUrl+'/api/product/list');
+      console.log("Products API Response:", response.data);
 
-    if (response.data.success) {
-      setProducts(response.data.product);
-    } else {
-      toast.error("Product is not displayed here");
+      if(response.data.success)
+      {
+        setProducts(response.data.products)
+      }
+      else
+      {
+        toast.error(response.data.message)
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
     }
-  } catch (error) {
-    console.log(error);
-    toast.error("List data has an error");
-  }
-};
+  };
 
-  useEffect(()=>{
-    getProductsData()
-  })
+  useEffect(() => {
+    getProductsData();
+  }, []);
+
   const value = {
     products,
     currency,
@@ -121,9 +116,10 @@ const ShopContextProvider = (props) => {
     navigate,
     backendUrl,
   };
+
   return (
-    <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
+    <ShopContext.Provider value={value}>{children}</ShopContext.Provider>
   );
 };
 
-export default ShopContextProvider;   
+export default ShopContextProvider;

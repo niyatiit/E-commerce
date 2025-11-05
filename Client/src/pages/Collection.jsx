@@ -80,7 +80,7 @@ const Collection = () => {
     applyFilter();
     // console.log("subcategory :- ", subCategory);
     // console.log("category :- ", category);
-  }, [category, subCategory , search , showSearch]);
+  }, [category, subCategory , search , showSearch , products]);
 
   // Sorted Product show Only
   const sortProducts = () => {

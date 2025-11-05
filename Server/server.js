@@ -26,6 +26,9 @@ app.get('/',(req,res)=>{
     res.send("Backend is start sucessfully")
 })
 
+app.get('/api/product/list',(req,res)=>{
+    res.send("data")
+})
 app.listen(port,()=>{
     console.log('Server is running in port : ' + port)
 })

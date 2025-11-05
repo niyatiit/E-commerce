@@ -11,7 +11,7 @@ const BestSeller = () => {
     const bestProducts = products.filter((item) => item.bestseller);
 
     setBestSellers(bestProducts.slice(0, 45));
-  }, []);
+  }, [products]);
 
   return (
     <main>
