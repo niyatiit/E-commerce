@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../App.css";
-import { assets } from "../assets/assets";
-import { Link, NavLink } from "react-router-dom";
+// import { assets } from "../assets/assets";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { LuSearch, LuUser } from "react-icons/lu";
 import { SlHandbag } from "react-icons/sl";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -12,7 +12,18 @@ const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const { setShowSearch } = useContext(ShopContext);
   const { getCartCount } = useContext(ShopContext);
+  const { navigate, token, setToken, setCartItems } = useContext(ShopContext);
 
+  const logout = () => {
+    navigate("/login");
+    localStorage.removeItem("token");
+    setToken("");
+    setCartItems({});
+  };
+
+  useEffect(() => {
+    setShowMenu(false);
+  }, [token]);
   return (
     <nav className="w-full flex justify-between items-center px-6 py-4 fixed top-0 left-0 bg-white shadow-md z-50">
       {/* Logo */}
@@ -48,21 +59,40 @@ const Navbar = () => {
 
         {/* User dropdown */}
         <div className="relative">
-          <Link to={"/login"}>
-            <LuUser
-              className="hover:cursor-pointer text-xl"
-              onClick={() => setShowMenu(!showMenu)}
-            />
-          </Link>
-          {showMenu && (
+          <LuUser
+            className="hover:cursor-pointer text-xl"
+            onClick={() => {
+              if (token) {
+                setShowMenu((prev) => !prev); // toggle menu only when logged in
+              } else {
+                navigate("/login"); // go to login if not logged in
+              }
+            }}
+          />
+
+          {token && showMenu && (
             <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg p-2 z-50">
               <p className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                 My Profile
               </p>
-              <p className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+
+              <p
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => {
+                  navigate("/orders");
+                  setShowMenu(false);
+                }}
+              >
                 Orders
               </p>
-              <p className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+
+              <p
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => {
+                  logout();
+                  setShowMenu(false);
+                }}
+              >
                 Logout
               </p>
             </div>

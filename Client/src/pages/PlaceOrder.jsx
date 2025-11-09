@@ -78,7 +78,7 @@ const PlaceOrder = () => {
           >
             <input
               type="radio"
-              onClick={() => setMethod("stripe")}
+              onChange={() => setMethod("stripe")}
               name="payment"
               value="stripe"
               className="mr-2 "
@@ -94,7 +94,7 @@ const PlaceOrder = () => {
           >
             <input
               type="radio"
-              onClick={() => setMethod("razorpay")}
+              onChange={() => setMethod("razorpay")}
               name="payment"
               value="razorpay"
               className="mr-2"
@@ -110,7 +110,7 @@ const PlaceOrder = () => {
           >
             <input
               type="radio"
-              onClick={() => setMethod("cod")}
+              onChange={() => setMethod("cod")}
               name="payment"
               value="cod"
               className="mr-2"

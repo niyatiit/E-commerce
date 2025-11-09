@@ -5,32 +5,34 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-  const { products, currency, cartItems,updateQuantity } = useContext(ShopContext);
-  const [cartData, setCartData] = useState([]);
+  const { products, currency, cartItems, updateQuantity } =
+    useContext(ShopContext);
+  const [cartdata, setCartdata] = useState([]);
 
   useEffect(() => {
-    const tempData = [];
+    if (products.length > 0) {
+      const tempData = [];
 
-    for (let items in cartItems) {
-      for (let item in cartItems[items]) {
-        if (cartItems[items][item] > 0) {
-          tempData.push({
-            id: items,
-            size: item,
-            quantity: cartItems[items][item],
-          });
+      for (let items in cartItems) {
+        for (let item in cartItems[items]) {
+          if (cartItems[items][item] > 0) {
+            tempData.push({
+              id: items,
+              size: item,
+              quantity: cartItems[items][item],
+            });
+          }
         }
       }
+      setCartdata(tempData);
     }
-    setCartData(tempData);
   }, [cartItems]);
 
   return (
     <main className="mt-30 px-6 md:px-20">
-      <Title  text1={"YOUR"} text2={"CARTS"} />
+      <Title text1={"YOUR"} text2={"CARTS"} />
       <div className="mt-10 space-y-6">
-      
-        {cartData.map((item, index) => {
+        {cartdata.map((item, index) => {
           const productData = products.find(
             (product) => product._id === item.id
           );
@@ -83,7 +85,8 @@ const Cart = () => {
                   className="text-gray-500 hover:text-red-600 text-xl transition-all"
                   title="Remove item"
                 >
-                  <AiTwotoneDelete className="hover:cursor-pointer"
+                  <AiTwotoneDelete
+                    className="hover:cursor-pointer"
                     onClick={() => updateQuantity(item.id, item.size, 0)}
                   />
                 </button>
@@ -91,9 +94,8 @@ const Cart = () => {
             </div>
           );
         })}
-       
       </div>
-      <CartTotal/>
+      <CartTotal />
     </main>
   );
 };

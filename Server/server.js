@@ -5,6 +5,7 @@ import connectDB from './config/db.js'
 import connectCloudinary from './config/cloudinary.js'
 import { userRoute } from './routes/user.route.js'
 import productRouter from './routes/product.route.js'
+import cartRoute from './routes/cart.route.js'
 
 // App Config
 const app = express()
@@ -21,7 +22,7 @@ app.use(cors())
 // API endpoints
 app.use('/api/user' , userRoute)
 app.use('/api/product' , productRouter)
-
+app.use('/api/cart',cartRoute)
 
 app.get('/',(req,res)=>{
     res.send("Backend is start sucessfully")
