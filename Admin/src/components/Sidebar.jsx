@@ -36,7 +36,7 @@ const Sidebar = () => {
         </NavLink>
 
         <NavLink
-          to="/ordrs"
+          to="/orders"
           className={({ isActive }) =>
             `flex items-center gap-3 border border-gray-200 rounded-md p-3 cursor-pointer mb-2 ${
               isActive ? "bg-zinc-200" : "hover:bg-gray-100"

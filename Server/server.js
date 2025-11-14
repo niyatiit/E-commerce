@@ -33,6 +33,7 @@ app.get('/',(req,res)=>{
 app.get('/api/product/list',(req,res)=>{
     res.send("data")
 })
+
 app.listen(port,()=>{
     console.log('Server is running in port : ' + port)
 })
