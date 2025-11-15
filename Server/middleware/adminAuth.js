@@ -10,8 +10,9 @@ const adminAuth = async (req, res, next) => {
         message: "Not Authorized Please Login Again",
       });
     }
-const token_decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    req.body.userId = token_decode.id;
+    const token_decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    // console.log("Decoded token:", token_decode.id);
+    // req.body.userId = token_decode.id;
     next();
   } catch (error) {
     console.log(error);

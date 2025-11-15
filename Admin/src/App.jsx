@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import Add from "./pages/Add";
 import List from "./pages/List";
 import Orders from "./pages/Orders";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export const backendUrl = "http://localhost:3000";
 export const currency = '$'
@@ -18,23 +18,26 @@ const App = () => {
   );
 
   useEffect(() => {
+    setToken(token);
     localStorage.setItem("token", token);
   }, [token]);
-
+  useEffect(()=>{
+    setToken(token);
+  },[token])
   return (
     <>
       <ToastContainer />
       {token === "" ? (
-        <Login setToken={setToken} />
+        <Login setToken={token} />
       ) : (
         <>
           {" "}
-          <Navbar setToken={setToken} />
+          <Navbar setToken={token} />
           <Sidebar />
           <Routes>
-            <Route path="/add" element={<Add setToken={setToken}/>} />
-            <Route path="/list" element={<List setToken={setToken}/>} />
-            <Route path="/orders" element={<Orders setToken={setToken}/>} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/list" element={<List/>} />
+            <Route path="/orders" element={<Orders token={token}/>} />
           </Routes>{" "}
         </>
       )}
