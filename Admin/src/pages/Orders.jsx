@@ -5,18 +5,13 @@ import axios from "axios";
 
 const Orders = ({ token }) => {
   const [orders, setOrders] = useState([]);
-
   const fetchAllOrders = async () => {
     if (!token) return;
-
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         backendUrl + "/api/order/list",
-        {},
-        { headers: { token } }
+        { headers: {token} }
       );
-
-      console.log("Orders fetched:", response.data.orders);
 
       if (response.data.success) {
         setOrders(response.data.orders);
@@ -39,7 +34,7 @@ const Orders = ({ token }) => {
 
       {orders.length === 0 && <p>No orders found.</p>}
 
-      {orders.map((order, orderIndex) => (
+      {orders?.map((order, orderIndex) => (
         <div key={orderIndex} className="mb-6 p-4 border rounded shadow">
           <h4 className="font-medium mb-2">
             {order.address
