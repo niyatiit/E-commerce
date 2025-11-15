@@ -28,11 +28,11 @@ const App = () => {
     <>
       <ToastContainer />
       {token === "" ? (
-        <Login setToken={token} />
+        <Login setToken={setToken} />
       ) : (
         <>
           {" "}
-          <Navbar setToken={token} />
+          <Navbar setToken={setToken} />
           <Sidebar />
           <Routes>
             <Route path="/add" element={<Add />} />
