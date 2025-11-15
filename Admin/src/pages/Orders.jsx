@@ -12,7 +12,7 @@ const Orders = ({ token }) => {
         backendUrl + "/api/order/list",
         { headers: {token} }
       );
-
+      console.log(response.data)
       if (response.data.success) {
         setOrders(response.data.orders);
       } else {

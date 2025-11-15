@@ -13,7 +13,6 @@
         // console.log(response)
         if (response.data.success) {
           setList(response.data.products);
-          console.log(response);
         } else {
           toast.error(response.data.message);
         }
